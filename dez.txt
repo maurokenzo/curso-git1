@@ -1,5 +1,2 @@
-<<<<<<< HEAD
 qqqqqqqqqqqqqqqqqq
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-=======
->>>>>>> parent of 3db0dc0 (a)

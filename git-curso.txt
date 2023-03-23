@@ -1,0 +1,488 @@
+
+===== Lentidão
+Ctrl+Shift+P
+Preferences: Configure Runtime Arguments
+{}argv.json
+// Should restart the app if the value is changed.
+"enable-crash-reporter": true,
+"disable-hardware-acceleration": true,
+
+===== Configuração
+$ git config --global user.name "Mauro Kenzo" (para máquinas comparilhadas)
+$ git config user.name "Mauro Kenzo"
+$ git config user.email "mauro.kenzo@gmail.com"
+config
+[user]
+	name = Mauro Kenzo
+	email = mauro.kenzo@gmail.com
+
+
+.gitignore 
+db.sqlite3
+**__pycache__ (diretório e subdiretórios)
+
+
+===========================================
+
+$ git init (inicia um diretório)
+$ git status
+$ git add . (tracked)
+$ git commit (staged) (snapshot)
+$ git commit -m "meu segundo commit"
+[master 206e608] meu segundo commit (hash id - identificador do commit)
+ 1 file changed, 10 insertions(+)
+$ git log (hash id) /pesquisa /q (sai)
+$ git log -1 (mostra só o último)
+$ git log --oneline
+$ git log --oneline -3
+$ git log --before="2023-01-06"
+$ git log --after="2023-01-04" -2
+$ git log --since="2 days ago" (desde 2 dias atrás)
+$ git log --author="mauro"
+
+$ git log --oneline
+0c0fec0 meu primeiro commit
+$ git checkout 0c0fec0 (vai para commit de um específico hash id)
+$ git checkout master (volta para último commit)
+
+$ git mv .\git-curso.txt .\git-curso2.txt
+$ git mv git-curso2.txt git-curso3.txt (com git mv não precisa da git add, apenas executar commit. Se renomear por SO será necessário add para nova inclusão com novo nome e exclusão do antigo)
+
+$ git rm git-curso3.txt  (exclui)
+
+====================
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   git-curso.txt
+
+$ git diff --staged (executar após git add, antes de executar commit para comparar)
+diff --git a/git-curso.txt b/git-curso.txt
+index 0463741..4de95d9 100644
+--- a/git-curso.txt
++++ b/git-curso.txt
+@@ -25,6 +25,7 @@ git mv git-curso2.txt git-curso3.txt (com git mv não precisa da git add, apenas
+
+ git rm git-curso3.txt  (exclui)
+
++///////////////////////////////////////////////////////
+
+ .gitignore
+ db.sqlite3
+
+=================================================
+
+$ git diff 206e608 3114ad5 (mostra diferença de 2 commits pelo hash id)
+
+///////////////////////////////////////////////////////
+
+
+======================================
+33333333333333333333333333333333333333
+
+#DESFAZENDO ALTERAÇÕES
+
+$ git commit --amend -m "atualiza 1" (atualiza o snapshopt atual sem gerar novo commit - quando quer corrigir último commit (substitui o hash ID))
+
+$ git restore --staged liferay.html (retira o arquivo de staged - volta o add)
+
+$ git reset HEAD --hard (volta todos add o commit atual - cancela as modificações)
+
+$ git reset HEAD^ --hard (descarta último commit. Volta para commit anterior - após comitar (com erro)
+
+
+#BRANCHES
+$ git branch funcionalidadeA (cria branch)
+$ git checkout funcionalidadeA (muda para branch)
+
+$ git branch -d funcionalidadeA (deleta branch)
+
+$ git branch -D funcionalidadeA (deleta branch mesmo com merge pendente quando há alterções de outras branches pendentes)
+
+$ git merge funcionalidadeB (a partir do branch master traz as alterações do branch funcjonalidadeB (commits))
+$ git log
+commit bd16d2fa79206f4cba60a309bf538f6be0f1bb9e (HEAD -> master, funcionalidadeB)
+Author: Mauro Kenzo <mauro_saiki@hotmail.com>
+Date:   Wed Feb 8 15:58:35 2023 -0300
+$ git branch -d funcionalidadeB
+Deleted branch funcionalidadeB (was bd16d2f).
+
+$ git checkout -b funcionalidadeC (muda para funcionalidadeC e se não existir cria)
+
+$ git checkout master (vai para branch master)
+$ git rebase funcionalidadeC (refaz a base)
+
+=====================================================
+
+#CLONE
+
+C:\Users\10622483846\Documents\Github\felicity>git clone ../secao04/. (clona um repositorio)
+C:\Users\10622483846\Documents\Github\felicity>git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+C:\Users\10622483846\Documents\Github\felicity>git config user.name "Felicity Jones"
+C:\Users\10622483846\Documents\Github\felicity>git config user.email "felicity@gmail.com"
+C:\Users\10622483846\Documents\Github\felicity>touch novoarquivo.html
+C:\Users\10622483846\Documents\Github\felicity>git add novoarquivo.html
+C:\Users\10622483846\Documents\Github\felicity>git commit -m "Adicionando novo arquivo"
+C:\Users\10622483846\Documents\Github\felicity> git push (vai dar erro porque o repositório remoto não é BARE)
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 254 bytes | 254.00 KiB/s, done.
+Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: error: refusing to update checked out branch: refs/heads/master
+remote: error: By default, updating the current branch in a non-bare repository (erro falta bare)
+
+C:\Users\10622483846\Documents\Github\felicity> ls
+    Diretório: C:\Users\10622483846\Documents\Github\felicity
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----       08/02/2023     16:24              0 arquivo1.html
+-a----       08/02/2023     16:24              0 arquivoB.html
+-a----       08/02/2023     16:24              0 arquivoC.html
+-a----       08/02/2023     16:28              0 novoarquivo.html
+
+C:\Users\10622483846\Documents\Github\felicity> git fetch (atualiza as alterações remotas para local SEM MERGE, apenas baixa os arquivos sem atualizar no git status)
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (2/2), 219 bytes | 2.00 KiB/s, done.
+From C:/Users/10622483846/Documents/Github/felicity/../secao04/.
+   70fb85b..ceca0f1  master     -> origin/master
+
+C:\Users\10622483846\Documents\Github\felicity> git rebase (atualiza o repositório após executar fetch)
+Successfully rebased and updated refs/heads/master.
+PS C:\Users\10622483846\Documents\Github\felicity> ls
+    Diretório: C:\Users\10622483846\Documents\Github\felicity
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----       08/02/2023     16:24              0 arquivo1.html
+-a----       08/02/2023     16:52              0 arquivo2.html
+-a----       08/02/2023     16:24              0 arquivoB.html
+-a----       08/02/2023     16:24              0 arquivoC.html
+-a----       08/02/2023     16:52              0 novoarquivo.html
+
++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++
+$ git status
+
+$ git pull (fetch + rebase baixa e atualiza status)
+C:\Users\10622483846\Documents\Github\felicity> git pull (traz arquivo criado por outro usuário que está no repositório remoto)
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (2/2), 227 bytes | 1024 bytes/s, done.
+From C:/Users/10622483846/Documents/Github/felicity/../secao04/.
+   ceca0f1..10ef1d4  master     -> origin/master
+Merge made by the 'ort' strategy.
+ arquivo3.hmtl | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 arquivo3.hmtl
+
+C:\Users\10622483846\Documents\Github\felicity> ls
+    Diretório: C:\Users\10622483846\Documents\Github\felicity
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----       08/02/2023     16:24              0 arquivo1.html
+-a----       08/02/2023     16:52              0 arquivo2.html
+-a----       09/02/2023     08:52              0 arquivo3.hmtl (atualizou adicionando este arquivl)
+-a----       08/02/2023     16:24              0 arquivoB.html
+-a----       08/02/2023     16:24              0 arquivoC.html
+-a----       08/02/2023     16:52              0 novoarquivo.html
+
+
+#BARE (REPOSITORY)
+$ cd ../SECAO04-BARE/
+$ git init --bare (inicia repositorio bare)
+$ cd julius/secao04/
+$ git clone ../../SECAO04-BARE/ . (clona o repositorio SECAO04-BARE)
+$ git config user.name "Julius Ricardo"
+$ git config user.email "julius@email.com"
+$ touch arquivo1j.html
+$ git add arquivo1j.html
+$ git commit -m "adição do arquivo1j"
+$ git push
+$ cd ../../maria/secao04/
+$ git clone ../../SECAO04-BARE .
+$ ls -la
+total 8
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:29 ./
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:28 ../
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:29 .git/
+-rw-r--r-- 1 10622483846 1049089 0 Feb  9 09:29 arquivo1j.html (clonado e trouxe o arquivo1j.html do Julius qeu fez o git push)
+$ touch arquivo1m.html
+$ git add arquivo1m.html
+$ git commit -m "adicnando arquivo1m" (ERRO porque não tem usuário e email configurados)
+$ git config user.name "Maria Joaquina"
+$ git config user.email "maria@gmail.com"
+$ git commit -m "adicnando arquivo1m"
+$ git push
+$ cd ../../julius/secao04/
+$ ls -la
+total 8
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:26 ./
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:14 ../
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:27 .git/
+-rw-r--r-- 1 10622483846 1049089 0 Feb  9 09:26 arquivo1j.html
+$ git pull
+$ ls -la
+total 8
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:43 ./
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:14 ../
+drwxr-xr-x 1 10622483846 1049089 0 Feb  9 09:43 .git/
+-rw-r--r-- 1 10622483846 1049089 0 Feb  9 09:26 arquivo1j.html
+-rw-r--r-- 1 10622483846 1049089 0 Feb  9 09:43 arquivo1m.html (trou o arquivo de Maria que realizou o git pull)
+
+#PUSH
+$ git push (atualiza o repositorio remoto inicliazado com bare)
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 210 bytes | 105.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To C:/Users/10622483846/Documents/julius/..\mks\P03-BARE
+ * [new branch]      master -> master
+
+#TAG
+$ cd ../../julius/secao04/
+$ git tag v1.0
+C:\Users\10622483846\Documents\Github\maria\secao04> git tag (não traz nada porque não replicou)
+$ git push origin v1.0 (envia a tag para repositório)
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+To C:/Users/10622483846/Documents/Github/julius/secao04/../../SECAO04-BARE/
+ * [new tag]         v1.0 -> v1.0
+C:\Users\10622483846\Documents\Github\maria\secao04> git pull (traz atualizações do reposiorio (nova tag))
+From C:/Users/10622483846/Documents/Github/maria/secao04/../../SECAO04-BARE
+ * [new tag]         v1.0       -> v1.0
+Already up to date. 
+C:\Users\10622483846\Documents\Github\maria\secao04> git tag (mostra a tag que trouxe)
+v1.0
+C:\Users\10622483846\Documents\Github\maria\secao04> git checkout v1.0 (acessa a tag)                                                                                                                    
+Note: switching to 'v1.0'.
+C:\Users\10622483846\Documents\Github\maria\secao04> git status
+HEAD detached at v1.0
+nothing to commit, working tree clean (não faz commit)
+C:\Users\10622483846\Documents\Github\maria\secao04> git switch -c correcoes-v1.0 (cria nova branch correcoes-v1.0 baseado na tag)
+Switched to a new branch 'correcoes-v1.0'
+C:\Users\10622483846\Documents\Github\maria\secao04> git branch
+* correcoes-v1.0
+  master
+C:\Users\10622483846\Documents\Github\maria\secao04> git status                                                                                                                            
+On branch correcoes-v1.0
+nothing to commit, working tree clean
+C:\Users\10622483846\Documents\Github\maria\secao04> dir >> arquivo2m.html (cria arquivo)
+C:\Users\10622483846\Documents\Github\maria\secao04> git add .\arquivo2m.html
+C:\Users\10622483846\Documents\Github\maria\secao04> git commit -m "correcao de bugs"
+C:\Users\10622483846\Documents\Github\maria\secao04> git push (envia para repositório a nova branch)
+C:\Users\10622483846\Documents\Github\maria\secao04> git checkout master (vai para master)
+C:\Users\10622483846\Documents\Github\maria\secao04> git rebase correcoes-v1.0 (atualiza a base)
+C:\Users\10622483846\Documents\Github\maria\secao04> git status
+C:\Users\10622483846\Documents\Github\maria\secao04> git tag v1.1 (cria nova tag v1.1)
+C:\Users\10622483846\Documents\Github\maria\secao04> git tag
+v1.0
+v1.1
+C:\Users\10622483846\Documents\Github\maria\secao04> git push origin v1.1  (envia nova tag v1.1)                                                                                                                
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 522 bytes | 261.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+To C:/Users/10622483846/Documents/Github/maria/secao04/../../SECAO04-BARE
+ * [new tag]         v1.1 -> v1.1
+
+#TAG (versões)
+C:\Users\10622483846\Documents\julius>git tag v1.0
+C:\Users\10622483846\Documents\julius>git push origin v1.0
+C:\Users\10622483846\Documents\maria>git pull
+From C:/Users/10622483846/Documents/maria/..\mks\P03-BARE
+ * [new tag]         v1.0       -> v1.0
+Already up to date.
+C:\Users\10622483846\Documents\maria>git tag
+v1.0
+C:\Users\10622483846\Documents\maria>git checkout v1.0
+Note: switching to 'v1.0'.
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+  git switch -c <new-branch-name>
+Or undo this operation with:
+  git switch -
+Turn off this advice by setting config variable advice.detachedHead to false
+HEAD is now at 63d2c09 teste-maria
+C:\Users\10622483846\Documents\maria>git status
+HEAD detached at v1.0
+nothing to commit, working tree clean
+C:\Users\10622483846\Documents\maria>git checkout master
+C:\Users\10622483846\Documents\maria>git status
+C:\Users\10622483846\Documents\maria>git tag v0.2
+C:\Users\10622483846\Documents\maria>git checkout v0.2
+C:\Users\10622483846\Documents\maria>git switch -c correcoes-v0.2
+Switched to a new branch 'correcoes-v0.2'
+C:\Users\10622483846\Documents\maria>git branch
+* correcoes-v0.2 (esse é o branch da tag v0.2)
+  master
+C:\Users\10622483846\Documents\maria>git status
+On branch correcoes-v0.2
+nothing to commit, working tree clean
+(criado novo arquivo maria-tag2.txt)
+C:\Users\10622483846\Documents\maria>git add .
+C:\Users\10622483846\Documents\maria>git commit -m "tag2"
+
+#GITHUB
+Criar conta e novo repositório no Github
+Seguir os passos da página innicial do repositório
+Criar pasta local e arquivo README.md
+$ git init
+$ git add README.md
+$ git config user.name "Mauro"
+$ git config user.email "mauro@email.com"
+$ git commit -m "first commit"
+$ git status
+$ git remote add origin https://github.com/maurokenzo/curso-git1.git
+$ git push -u origin master
+$ git remote -v
+origin  https://github.com/maurokenzo/curso-git1.git (fetch)
+origin  https://github.com/maurokenzo/curso-git1.git (push)
+S git config credential helper store (guarda senha)
+
+#CLONE
+$ CD..
+$ cd aula04/
+Copiar a URL para clonar o repositório no Github
+$ git clone https://github.com/maurokenzo/curso-git1.git
+$ cd curso-git1/
+$ git remote -v
+origin  https://github.com/maurokenzo/curso-git1.git (fetch)
+origin  https://github.com/maurokenzo/curso-git1.git (push)
+$ git config user.name "Mauro"
+$ git config user.email "mauro@gmail.com"
+
+#PULL (FETCH + MERGE)
+$ cd ../../CLONE2/
+$ git clone https://github.com/maurokenzo/curso-git1.git
+$ cd curso-git1/
+$ git config user.name "FElicity Jones"
+$ git config user.email "felicity@email.com"
+$ cd ../../aula04/curso-git1/
+$ touch um.txt
+$ git add .
+$ git commit -m "um.txt"
+$ git push -u origin master
+$ cd ../../CLONE2/curso-git1/
+$ git pull
+$ cd ../../aula04/curso-git1/
+$ touch dois.txt
+$ git add .
+$ git commit -m "dois.txt"
+$ git push -u origin master
+$ cd ../../CLONE2/curso-git1/
+$ git pull
+$ git pull (atualiza as alterações do repositorio bare feitas por outros usuários)
+
+#GITHUB
+Usuário A
+Criar conta
+Criar repositório
+Adicionar colaborador
+Criar clone local (verificar conta registrada nas credenciais do windows)
+
+Usuário B
+Criar conta
+Acessar e-mail e aceitar o invete para colaborar
+Criar clone local (verificar conta registrada nas credenciais do windows)
+Configurar usuário e e-mail (git config)
+
+Usuário A
+Fazer alterações em um arquivo e push
+
+Usuário B 
+Alterar mesmo arquivo e push (vai dar erro de CONFLITO)
+
+#CHECKOUT (VOLTANDO VERSÕES)
+$ git checkout -- . (desfaz todas alterações ANTES de git add)
+$ git checkout -- quatro.txt (volta um arquivo específico)
+git checkout HEAD -- . (desfaz todas alterações DEPOIS de git add)
+
+#REVERT E RESET (DESFAZENDO)
+$ git revert (volta a alteração do úlimo commit (ID) abrindo editor de texto (salvar e sair) )
+$ git reset HEAD~1 (volta o último (1) commit para staged (add))
+
+#CONFLITOS
+Usuário A
+Atualiza o repositorio remoto > arquivo1 modificado
+
+Usuario B
+Modifica arquivo1
+Ao tentar executar push do mesmo arquivo modificado (arquivo1) ocorre erro 
+Executar git pull
+$ git pull
+Irá abrir o editor no VSCode mostrando as 2 alterações e o usuário B deve fazer o ajuste como desejado e selvar o arquivo
+Executar add, commit e push
+
+Uauário A
+Ao tentar executar push recebe aviso que foi rejeitado e precisa executar pull
+$ git pull
+Então poderá executar push
+$ git push
+
+#CREDENCIAIS
+$ git config credential.helper store (armazena credenciais)
+$ git config --global --unset credential.helper (elimina credenciasi salvas)
+$ git config --unset credential.helper (elimina credenciasi salvas)
+Alterando credenciais do usuário atual
+$ git config --unset credential.helper
+$ git config credential.helper store
+$ git remote set-url origin https://user@github.com/user/repository.git
+
+#GITHUB
+-ISSUES (comentários de BUGs) > criar no Github (será gerado código #1)
+É possivel encerrar ISSUES durante commit
+As palavras chave são:
+fix, fixes, fixed, close, closes, closed, resolve, resolves, resolved
+Então você pode escrever sua mensagem de commit mais ou menos assim:
+$ git commit -m "Fix error on issue #32"
+$ git commit -m "Corrigido arquivo1.html. Closes #1"
+
+-FORK 
+Cria novo repositorio a partir de outro repositório de usuário diferente
+O projeto (repositório criado é inpedente)
+
+-REMOVER REPOSITORIO
+No repositorio atual > settings > Danger Zone > Delete this repository
+
+-PULL REQUEST
+Envia sugestão de alteração para um projeto original (FORK)
+Pull requests > New pull request
+Recebendo (usuário que recebe)
+Pull requests > abrir a requisição
+(anotar o ID do pull request)
+$ git fetch origin pull/1/head:correcao_1  (pull/{ID}/head:{NEW BRANCH}) (baixar e cirar novo branch somente com o pull request)
+$ git checkout correcao_1
+Pull requests > abrir a requisição > Mege pull request > Confirm merge
+$ git checkout master
+$ git pull
+$ git status
+$ git log
+
+#SITE ESTÁTICO NO GITHUB
+maurokenzo.github.io (repositório)
+
+#MARKDOWN
+README.md (https://github.com/maurosaiki/ms-projeto1.git)
+
+#GIST (trechos de códigos - para reutilizar)
+Clicar no + novo gist (direita acima)
+
+
+
+
+
